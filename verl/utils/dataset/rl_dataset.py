@@ -222,11 +222,13 @@ class RLHFDataset(Dataset):
             return total
 
         num_text_tokens = len(
-            self.processor.tokenizer(
-                text=raw_prompt,
-                add_special_tokens=False,  # avoid adding special tokens
-                return_attention_mask=False,
-            )["input_ids"]
+            normalize_token_ids(
+                self.processor.tokenizer(
+                    text=raw_prompt,
+                    add_special_tokens=False,  # avoid adding special tokens
+                    return_attention_mask=False,
+                )["input_ids"]
+            )
         )
         return (
             num_text_tokens
